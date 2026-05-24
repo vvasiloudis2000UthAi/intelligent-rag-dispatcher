@@ -1,14 +1,29 @@
-from langchain_community.document_loaders import ArxivLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+import arxiv
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def fetch_arxiv_papers(query, max_results=15):
 
     print(f"Fetching papers from arXiv with query: '{query}'")
-    loader = ArxivLoader(query=query, load_max_docs=max_results)
-    docs = loader.load()
+    client = arxiv.Client()
+    search = arxiv.Search(
+        query=query,
+        max_results=max_results,
+        sort_by=arxiv.SortCriterion.Relevance
+    )
 
-    for doc in docs:
-        doc.metadata['search_query'] = query
+    docs = []
+    for result in client.results(search):
+        text_content = f"Title: {result.title}\n\nAbstract: {result.summary}"
+        doc = Document(
+            page_content=text_content,
+            metadata={
+                "search_query": query, 
+                "source": result.entry_id,
+            }
+        )
+        docs.append(doc)
+        
     return docs
 
 def main():
