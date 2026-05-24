@@ -21,7 +21,7 @@ The pipeline consists of four main stages:
 
 The project was developed in Python and utilizes state-of-the-art AI development tools:
 * **LangChain (Core, Community, OpenAI, Chroma):** The core framework for Prompt management, Chain creation, and model integration.
-* **OpenAI API:** Use of advanced models (`gpt-4o-mini` for routing, `gpt-4o` for generation, and `text-embedding-3-small` for embeddings).
+* **OpenAI API:** Use of advanced models (`gpt-5-mini` for routing, `gpt-5` for generation, and `text-embedding-3-small` for embeddings).
 * **ChromaDB:** Local Vector Database for fast embedding storage and semantic search.
 * **Scikit-Learn & NumPy:** For the implementation of the K-Means clustering algorithm.
 * **ArXiv API:** For the automated extraction of real scientific articles.
@@ -76,15 +76,6 @@ python test_pipeline.py
 * **First execution:** The system will connect to arXiv, download the articles, categorize them, and create the local `chroma_db/` folder. (Duration: ~20-30 seconds).
 * **Subsequent executions:** The system recognizes the existing database and jumps straight to the interactive terminal, saving time and API tokens.
 
----
-
-## ⚠️ Troubleshooting
-
-* **`[Errno 2] No such file or directory: 'prompts/routing_prompt.txt'`**: This means the `prompts/` folder is missing, or the files inside are misspelled. Ensure the folder is named `prompts` (plural) and the files match the exact names.
-* **`ModuleNotFoundError: No module named 'langchain.chains'`**: Run `python -m pip install -r requirements.txt` again to ensure all dependencies are bound to the active Python environment.
-* **`'ChatOpenAI' object is not callable`**: Ensure you are using the `.invoke()` method as implemented in the most recent version of `agent.py`, not calling the model directly as a function.
-
----
 
 ## 🧪 QA & Testing Scenarios
 
